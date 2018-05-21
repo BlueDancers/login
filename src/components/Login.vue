@@ -30,7 +30,30 @@
     },
     methods: {
       logintodo () {
-        this.$router.push('/todolist')
+        let obj = {
+          username : this.account,
+          password : this.password
+        }
+        let result = this.$http.post('/user',obj)
+        result.then((res) => {
+          console.log(res.data)
+          if(res.data.success) {
+            sessionStorage.setItem('demo-token',res.data.info)
+            this.$message({
+              type: 'success',
+              message: '登录成功'
+            })
+             this.$router.push('/todolist')
+          }else {
+            this.$message.error(res.data.info)
+            sessionStorage.setItem('demo-token',null)
+          }
+        },(err) => {
+          console.log(err);
+          this.$message.error('请求错误')
+          sessionStorage.setItem('demo-token',null)
+        })
+       return result
       }
     }
   }
