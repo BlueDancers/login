@@ -29,7 +29,7 @@
           </el-tab-pane>
           <el-tab-pane label="已完成事项" name="second">
             <el-col>
-              <div v-if="count > 0">
+              <div v-if="!fail">
                 <div v-for="(item,index) in list" :key="index">
                   <div class="todo-list" v-if="item.status == true">
                     <span class="item finished">
@@ -41,7 +41,7 @@
                   </div>
                 </div>
               </div>
-              <div v-else>
+              <div v-else-if="fail">
                 暂无已完成事项
               </div>
             </el-col>
@@ -53,13 +53,13 @@
 </template>
 
 <script>
+  import jwt from 'jsonwebtoken'
   export default {
     data () {
       return {
         name: '管理员',
-        activeName: '',
+        activeName: 'first',
         todos: '',
-        Done: false,
         list: [
           {
             status: false,
@@ -69,12 +69,82 @@
             status: true,
             content:123
           }
-        ],
-        count :1
+        ]
+      }
+    },
+    created () {
+      let token = sessionStorage.getItem('demo-token');   //解析token获取用户名 密码
+      this.name = jwt.decode(token).name 
+    },
+    computed: {
+      Done () {
+        var list = this.list
+        var one = 0
+        list.map((i)=> {
+          if(i.status == false) {
+            one++
+          }
+        })
+        if(one > 0){
+          return false
+        }else {
+          return true
+        }
+      },
+      fail () {
+        var list = this.list
+        var two = 0
+        list.map((i)=> {
+          if(i.status == true) {
+            two++
+          }
+        })
+        if(two > 0){
+          return false
+        }else {
+          return true
+        }
       }
     },
     methods: {
       addTodos () {
+        if(this.todos == ''){
+          this.$message({
+            type: 'info',
+            message: '请不要输入空字符'
+          })
+        }else{
+        var lister = 
+            {
+              status: false,
+              content: this.todos
+            }
+        console.log(lister)
+        this.list.push(lister)
+        this.todos = ''
+        }
+        
+      },
+      finished (index) {
+        this.$set(this.list[index],'status',true)  //在原始情况下 已经创建好的数组在后期数据添加的情况下 会不自动更新到视图
+        this.$message({
+          type: 'success',
+          message: '任务完成'
+        })
+      },
+      remove (index) {
+        this.list.splice(index,1);
+        this.$message({
+          type: 'success',
+          message: '删除成功'
+        })
+      },
+      restore (index) {
+        this.$set(this.list[index], 'status', false)
+        this.$message({
+          type: 'success',
+          message: '还原成功'
+        })
 
       }
     }

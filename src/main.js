@@ -16,15 +16,15 @@ router.beforeEach((to, from, next) => {
     if (to.path == '/todolist'){
       next()
     }else {
-      console.log('存在token 进入系统')
+      
       next('/todolist')
     }
   } else {
     if (to.path == '/todolist') {
-      console.log('token不存在 跳转主页面');
+      
       next('/')
-    } else {
-      console.log('跳转主页面');
+    } else { // 全局设定header的token验证，注意Bearer后有个空格
+      Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token;   //看不懂
       next()
     }
   }
