@@ -11,7 +11,7 @@
             <el-col>
               <div v-if="!Done">
                 <div v-for="(item,index) in list" :key="index">
-                  <div class="todo-list" v-if="item.status == false">
+                  <div class="todo-list" v-if="item.status == 'false'">
                     <span class="item">
                       {{index+1}}. {{item.content}}
                     </span>
@@ -31,7 +31,7 @@
             <el-col>
               <div v-if="!fail">
                 <div v-for="(item,index) in list" :key="index">
-                  <div class="todo-list" v-if="item.status == true">
+                  <div class="todo-list" v-if="item.status == 'true'">
                     <span class="item finished">
                       {{index+1}}. {{item.content}}
                     </span>
@@ -57,31 +57,27 @@
   export default {
     data () {
       return {
-        name: '管理员',
+        name: '管理员',   //默认值管理员
         activeName: 'first',
         todos: '',
-        list: [
-          {
-            status: false,
-            content:123
-          },
-          {
-            status: true,
-            content:123
-          }
-        ]
+        id: '',
+        list: []
       }
     },
     created () {
       let token = sessionStorage.getItem('demo-token');   //解析token获取用户名 密码
-      this.name = jwt.decode(token).name 
+      this.name = jwt.decode(token).name   //将name值放入变量
+      this.id = jwt.decode(token).id
+      this.getTodolist()    //获取todolist
+      // this.setTodolist()    //增加todolist
     },
     computed: {
       Done () {
         var list = this.list
+        console.log(list)
         var one = 0
         list.map((i)=> {
-          if(i.status == false) {
+          if(i.status == "false") {
             one++
           }
         })
@@ -95,8 +91,9 @@
         var list = this.list
         var two = 0
         list.map((i)=> {
-          if(i.status == true) {
+          if(i.status == "true") {
             two++
+            console.log(i);
           }
         })
         if(two > 0){
@@ -116,17 +113,21 @@
         }else{
         var lister = 
             {
-              status: false,
+              status: "false",
               content: this.todos
             }
         console.log(lister)
         this.list.push(lister)
         this.todos = ''
+        this.$message({
+          type: 'success',
+          message: '添加成功'
+        })
         }
         
       },
-      finished (index) {
-        this.$set(this.list[index],'status',true)  //在原始情况下 已经创建好的数组在后期数据添加的情况下 会不自动更新到视图
+      finished (index) {   
+        this.$set(this.list[index],'status',"true")  //在原始情况下 已经创建好的数组在后期数据添加的情况下 会不自动更新到视图
         this.$message({
           type: 'success',
           message: '任务完成'
@@ -140,12 +141,22 @@
         })
       },
       restore (index) {
-        this.$set(this.list[index], 'status', false)
+        this.$set(this.list[index], 'status', "false")
         this.$message({
           type: 'success',
           message: '还原成功'
         })
-
+      },
+      async getTodolist () {
+        let id = {
+          id: this.id
+        }
+        //将后端数据读取出来
+        this.$http.post('/list',id)
+        .then((res)=> {
+          console.log(res.data);
+          this.list = res.data
+        })
       }
     }
   }

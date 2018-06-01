@@ -15,7 +15,7 @@ module.exports = {
         target: 'http://localhost:80',
         changeOrigin: true
       },
-      '/api': {
+      '/list': {
         target: 'http://localhost:80',
         changeOrigin: true
       }

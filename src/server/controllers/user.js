@@ -4,11 +4,13 @@ let jsonwebtoken = require('jsonwebtoken')
 let bcrypt = require('bcryptjs')
 
 
+
+//测试获取数据库接头
 let getuserInfo = (id) => user.user.find({id:id},(err,data)=> {
     if(!err) return data
   }).exec()
 
-
+//jwt 配合bcryptjs 完成登录
 let postUserAuth = async function (data) {
   let userinfo = await user.getUserName(data.username);
   userinfo = userinfo[0]
@@ -29,8 +31,8 @@ let postUserAuth = async function (data) {
         name: userinfo.username,
         id: userinfo.id
       }
-      let secret = 'vue-koa-demo';
-      let token = jsonwebtoken.sign(userToken, secret)
+      let secret = 'vue-koa-demo';   //指定秘钥,这是只会 用来判断token合法的标志
+      let token = jsonwebtoken.sign(userToken, secret)  //签名token  
       return {
         success: true,
         info: token
