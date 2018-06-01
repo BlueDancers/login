@@ -24,10 +24,17 @@ router.get('/user/:id', async (ctx, next) => {
 
 //获取数据库数据 添加路由
 router.post('/list', async (ctx, next) => {
-  var data = ctx.request.body  //get获取的参数
-  console.log(data);
+  let data = ctx.request.body  //get获取的参数
   let list = await todolist.getTodolist(data.id)
   ctx.body = list
+})
+
+//增加数据
+router.post('/addTodolist', async (ctx,next)=> {
+  let data = ctx.request.body
+  await todolist.addTodolist(data)
+  console.log(data)
+  ctx.body = "写入成功"
 })
 
 module.exports = router

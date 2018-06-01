@@ -18,6 +18,10 @@ module.exports = {
       '/list': {
         target: 'http://localhost:80',
         changeOrigin: true
+      },
+      '/addTodolist': {
+        target: 'http://localhost:80',
+        changeOrigin: true
       }
     },
 

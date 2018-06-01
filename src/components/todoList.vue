@@ -111,10 +111,10 @@
             message: '请不要输入空字符'
           })
         }else{
-        var lister = 
-            {
+        var lister = {
+              user_id: jwt.decode(sessionStorage.getItem('demo-token')).id,
+              content: this.todos,
               status: "false",
-              content: this.todos
             }
         console.log(lister)
         this.list.push(lister)
@@ -122,6 +122,10 @@
         this.$message({
           type: 'success',
           message: '添加成功'
+        })
+        this.$http.post("/addTodolist",lister)
+        .then((res)=> {
+          console.log("成功");
         })
         }
         
