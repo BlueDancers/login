@@ -1,31 +1,12 @@
-# login
+# 基于koa2 + vue + mongdb 使用 jwt 的登录模块
 
-> A Vue.js project
+后端分级
 
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
+```
+config       配置
+controllers  控制层 所有方法都写在这里面
+models       模型层 给控制层调用的数据库方法都写在这里面
+routers      所有路由设定都写在这里面
+schema       基础数据库
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-"# login" 
