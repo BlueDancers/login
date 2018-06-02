@@ -15,10 +15,16 @@ let updateTodolist = async (list) => {
   return await todolist.updateTodolist(list)
 }
 
+//删除数据
+let deleteTodolist = async (list) => {
+  return await todolist.deleteTodolist(list)
+}
+
 module.exports = {
   addTodolist,
   getTodolist,
-  updateTodolist
+  updateTodolist,
+  deleteTodolist
 }
 
 

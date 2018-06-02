@@ -44,4 +44,11 @@ router.post('/updateTodolist', async (ctx, next)=> {
   ctx.body = "更新成功"
 })
 
+//删除数据
+router.post('/deleteTodolist', async (ctx, next)=> {
+  let data  = ctx.request.body
+  console.log(data);
+  await todolist.deleteTodolist(data)
+  ctx.body = "删除成功"
+})
 module.exports = router

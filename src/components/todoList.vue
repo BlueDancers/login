@@ -142,12 +142,20 @@
         })
       },
       remove (index) {
-        this.list.splice(index,1);
+        
         this.$message({
           type: 'success',
           message: '删除成功'
         })
-        
+        console.log(this.list[index].content);
+        let list = {
+          list : this.list[index].content
+        }
+        this.$http.post('/api/deleteTodolist',list)
+        .then((data)=> {
+              this.list.splice(index,1);
+          console.log(data);
+        })
       },
       restore (index) {
         this.$set(this.list[index], 'status', "false")
