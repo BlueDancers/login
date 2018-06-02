@@ -10,6 +10,8 @@ let app = new koa()
 app.use(json())
 app.use(logger())
 app.use(parser())
+router.use('/api',routerList.routes())    //装载父路由
+app.use(routerList.routes()) // 注册路由
 
 //启动服务器
 app.listen(80,()=> {
@@ -34,7 +36,7 @@ app.listen(80,()=> {
 // });
 
 
-app.use(routerList.routes())   // 注册路由
+
 //koa.use("/api",jwt({secret: 'vue-koa-demo'}),api.routes())
 // 所有走/api/打头的请求都需要经过jwt中间件的验证。secret密钥必须跟我们当初签发的secret一致
 module.exports = app;

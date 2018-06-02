@@ -37,4 +37,11 @@ router.post('/addTodolist', async (ctx,next)=> {
   ctx.body = "写入成功"
 })
 
+//更变数据
+router.post('/updateTodolist', async (ctx, next)=> {
+  let data = ctx.request.body
+  await todolist.updateTodolist(data)
+  ctx.body = "更新成功"
+})
+
 module.exports = router

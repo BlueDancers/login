@@ -34,7 +34,7 @@
           username : this.account,
           password : this.password
         }
-        let result = this.$http.post('/user',obj)
+        let result = this.$http.post('/api/user',obj)
         result.then((res) => {
           console.log(res.data)
           if(res.data.success) {

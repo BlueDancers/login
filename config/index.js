@@ -11,15 +11,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/user': {
-        target: 'http://localhost:80',
-        changeOrigin: true
-      },
-      '/list': {
-        target: 'http://localhost:80',
-        changeOrigin: true
-      },
-      '/addTodolist': {
+      '/api': {
         target: 'http://localhost:80',
         changeOrigin: true
       }

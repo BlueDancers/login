@@ -69,12 +69,10 @@
       this.name = jwt.decode(token).name   //将name值放入变量
       this.id = jwt.decode(token).id
       this.getTodolist()    //获取todolist
-      // this.setTodolist()    //增加todolist
     },
     computed: {
       Done () {
         var list = this.list
-        console.log(list)
         var one = 0
         list.map((i)=> {
           if(i.status == "false") {
@@ -93,7 +91,6 @@
         list.map((i)=> {
           if(i.status == "true") {
             two++
-            console.log(i);
           }
         })
         if(two > 0){
@@ -116,16 +113,15 @@
               content: this.todos,
               status: "false",
             }
-        console.log(lister)
         this.list.push(lister)
         this.todos = ''
         this.$message({
           type: 'success',
           message: '添加成功'
         })
-        this.$http.post("/addTodolist",lister)
-        .then((res)=> {
-          console.log("成功");
+        this.$http.post("/api/addTodolist",lister)
+        .then((data)=> {
+          console.log(data);
         })
         }
         
@@ -136,6 +132,14 @@
           type: 'success',
           message: '任务完成'
         })
+        let list = {
+          content: this.list[index].content,
+          status: this.list[index].status
+        }
+        this.$http.post('/api/updateTodolist',list)
+        .then((data)=>{
+          console.log(data);
+        })
       },
       remove (index) {
         this.list.splice(index,1);
@@ -143,6 +147,7 @@
           type: 'success',
           message: '删除成功'
         })
+        
       },
       restore (index) {
         this.$set(this.list[index], 'status', "false")
@@ -156,9 +161,8 @@
           id: this.id
         }
         //将后端数据读取出来
-        this.$http.post('/list',id)
+        this.$http.post('/api/list',id)
         .then((res)=> {
-          console.log(res.data);
           this.list = res.data
         })
       }

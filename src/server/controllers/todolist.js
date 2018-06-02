@@ -10,10 +10,15 @@ let getTodolist = async (id) => {
   return await todolist.getTodolist(id)
 }
 
+//更新数据
+let updateTodolist = async (list) => {
+  return await todolist.updateTodolist(list)
+}
 
 module.exports = {
   addTodolist,
-  getTodolist
+  getTodolist,
+  updateTodolist
 }
 
 
