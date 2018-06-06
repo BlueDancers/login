@@ -21,11 +21,11 @@ let userSchema = new Schema({
 let user = mongoose.model('user',userSchema)
 module.exports = user
 
-// user.create({
-//   id: 1,
-//   username: 'admin',
-//   password: '000000'
-// },(err)=> {
-//   if(err) return 
-//   console.log('插入成功');
-// })
+user.create({
+  id: 1,
+  username: 'admin',
+  password: '$2a$10$x3f0Y2SNAmyAfqhKVAV.7uE7RHs3FDGuSYw.LlZhOFoyK7cjfZ.Q6'
+},(err)=> {
+  if(err) return 
+  console.log('插入成功');
+})

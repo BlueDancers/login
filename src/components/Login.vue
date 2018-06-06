@@ -11,7 +11,7 @@
         </span>
         <el-row>
           <el-input v-model="account" placeholder="账号" type="text"></el-input>
-          <el-input v-model="password" placeholder="摩玛" type="password"></el-input>
+          <el-input v-model="password" placeholder="密码" type="password"></el-input>
         </el-row>
         <el-button type="primary" @click="logintodo">登录</el-button>
       </el-col>
