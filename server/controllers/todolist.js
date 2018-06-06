@@ -11,7 +11,7 @@ let getTodolist = async (id) => {
 }
 
 //更新数据
-let updateTodolist = async (list) => {
+let updateTodolist = async (list) => {   
   return await todolist.updateTodolist(list)
 }
 
@@ -19,7 +19,7 @@ let updateTodolist = async (list) => {
 let deleteTodolist = async (list) => {
   return await todolist.deleteTodolist(list)
 }
-
+  
 module.exports = {
   addTodolist,
   getTodolist,
